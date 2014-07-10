@@ -1,7 +1,5 @@
 # -*- coding: UTF-8  -*-
 
-
-
 class MySql:
         
     user = ''
@@ -11,7 +9,11 @@ class MySql:
     
     def setUser(self, user):
         self.user = user
-        return self
+        return 'ok'
+        
+    def debug(self):
+        return "is fine"
+        #return socket.create_connection('sql.backen.nazwa.pl:3307')
         
    
         

@@ -15,5 +15,9 @@ class Login:
         
         form = self.framework.module('System.Http.Post');
         database = self.framework.module('System.Database.MySql');
+        
+        session = self.framework.module('System.Http.Session');
+        
+        #session.setSession('dupa', {'dfsdf': 1, 'dfssdfdf': 1, 'dfsdfsdff': 1 })
                 
-        return self.framework.render('', {'message': message, 'type': type}, 'clear')
+        return self.framework.render('', {'message': session.debug(), 'type': type}, 'clear')
