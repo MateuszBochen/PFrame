@@ -95,9 +95,9 @@ class Kernel:
         controlerres = getattr(controller, method)()
         
         # Wysy³anie ciasteczek
-        self.autoloader.load('System.Http.Session').setCookies()
+        #self.autoloader.load('System.Http.Session').setCookies()
         
         # Wysy³anie nag³ówka do przegl¹darki
-        self.responseObject.setHttpResponse()
+        self.responseObject.httpResponse()
         self.templating.display()
         

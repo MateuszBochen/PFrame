@@ -2,13 +2,13 @@
 
 import time, os, shelve, sha
 
+
+
 class Session:
     
-    # collection of cookies to send before send headers
-    collection = {}
+   
     
-    # cookie live time
-    expires = 900 # 15 minut
+   
     
     # session id 
     sessionId = ''
@@ -22,12 +22,16 @@ class Session:
     # shelve object 
     session = ''
     
+    cookie = ''
     
-    def __init__(self):
-        self.sessionId = self.get(self.sessionIdCookieName)
+    def __init__(self, cookieObj):
+        self.cookie = cookieObj
+        
+        
+        self.sessionId = self.cookie.get(self.sessionIdCookieName)
         if(not self.sessionId):
             self.sessionId = sha.new(repr(time.time())).hexdigest()
-            self.set(self.sessionIdCookieName, self.sessionId)
+            self.cookie.set(self.sessionIdCookieName, self.sessionId)
         
         
         self.sessionDir = os.environ["PY_PATH"]+'/'+self.sessionDir
@@ -37,37 +41,14 @@ class Session:
         
         self.session = shelve.open(self.sessionDir + '/sess_' + self.sessionId, writeback=True)
         
-    # set cookie 
-    # @param name cookie name
-    # @param value cookie value    
-    # @return  self
-    def set(self, name, value):
-        self.collection[name] = [value, self.expires]
-        return self
-        
-    # get value from cookie
-    # @param name cookie name
-    # @return cookie value or empty string if cookie does not exist
-    def get(self, name):
     
-        if os.environ.has_key('HTTP_COOKIE'):
-            for cookie in os.environ['HTTP_COOKIE'].split(';'):   
-                cookie = cookie.strip(' \t\n\r/')
-                cookie = cookie.split('=')
-                if name == cookie[0]:
-                    return cookie[1]
-        return ''
+        
+    
                 
     def debug(self):
         return 'SID: '+self.sessionId+' -- V: '+str(self.getSession('dupa'))
         
-    # write cookie headers    
-    def setCookies(self):
-        future = time.time()
-        
-        for name, value in self.collection.iteritems():    
-            expires = time.strftime("%A, %d-%m-%Y %H:%M:%S %Z", time.gmtime(future + value[1]))
-            print "Set-Cookie:"+(name)+"="+(value[0])+";Expires="+(expires)+";"
+    
             
     # get session value
     # @param name session name (session key)

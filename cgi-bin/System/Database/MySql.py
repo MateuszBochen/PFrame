@@ -1,5 +1,7 @@
 # -*- coding: UTF-8  -*-
 
+#import _mysql
+
 class MySql:
         
     user = ''
