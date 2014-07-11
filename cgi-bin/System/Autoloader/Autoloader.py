@@ -21,37 +21,24 @@ class Autoloader:
         
         if(name in self.collections and asNew == False):           
             return self.collections[name]       
-            
+        
         if(self.moduleExists(name)):
-            if(name in self.additionalServices):
-                services = []
+            self.collections[name] = self.kernelObj.imortLib.import_module(name)
+            services = []
+            if(addKernel):
+                services.append(self.kernelObj)
+                
+            if(name in self.additionalServices):                
                 for service in self.additionalServices[name]:                    
                     services.append(self.load(service))
-                    
-                self.collections[name] = self.kernelObj.imortLib.import_module(name)
                 
-                if(addKernel):
-                    if(asNew):
-                        return getattr(self.collections[name], name.split('.')[-1])(self.kernelObj, *services)
-                    self.collections[name] = getattr(self.collections[name], name.split('.')[-1])(self.kernelObj, *services)
-                else:
-                    if(asNew):
-                        getattr(self.collections[name], name.split('.')[-1])(*services)
-                    self.collections[name] = getattr(self.collections[name], name.split('.')[-1])(*services)
-                return self.collections[name]
-            else:
-                self.collections[name] = self.kernelObj.imortLib.import_module(name)
-                
-                if(addKernel):
-                    if(asNew):
-                        return getattr(self.collections[name], name.split('.')[-1])(self.kernelObj)
-                    self.collections[name] = getattr(self.collections[name], name.split('.')[-1])(self.kernelObj)
-                else:
-                    if(asNew):
-                        getattr(self.collections[name], name.split('.')[-1])()
-                    self.collections[name] = getattr(self.collections[name], name.split('.')[-1])()
-                
-                return self.collections[name]
+            if(asNew):
+                return getattr(self.collections[name], name.split('.')[-1])(*services)
+            self.collections[name] = getattr(self.collections[name], name.split('.')[-1])(*services)
+            
+            return self.collections[name]
+        
+        
         return False
             
     def moduleExists(self, moduleName):     
