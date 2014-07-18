@@ -19,5 +19,5 @@ os.environ["PY_PATH"] = os.path.dirname(__file__)
 from System import Kernel
 myObject = Kernel.Kernel()
 
-#print "<hr/>----------"
+#$print "<hr/>----------" 
 #print microtime() - start

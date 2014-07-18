@@ -10,7 +10,7 @@ class Autoloader:
     
     additionalServices = {
         'System.Http.Header.Cookies': ['System.Http.Response'],
-        'System.Http.Header.Session': ['System.Http.Header.Cookies']
+        'System.Http.Session': ['System.Http.Header.Cookies']
     }
     
     def __init__(self, kernel):

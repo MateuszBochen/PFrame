@@ -31,7 +31,7 @@ class Kernel:
         
         
         
-        requestObject = self.autoloader.load("System.Http.Request", False, True)        
+        requestObject = self.autoloader.load("System.Http.URL", False, True)        
         
         firstSegment = requestObject.getSegment(0);
         
