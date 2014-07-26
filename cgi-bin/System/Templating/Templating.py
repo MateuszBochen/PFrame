@@ -31,9 +31,15 @@ class Templating:
         
         myPath = os.environ["PY_PATH"].replace(os.path.dirname(os.environ["SCRIPT_NAME"]), '')
         
+       
+        
         # część szablonu
-        partPath = myPath+'/'+self.app.config['DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/Apps/'+self.app.appName+'/'+self.app.controller+'/'+partFile+'.html'
-        mainPath = myPath+'/'+self.app.config['DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/'+self.mainFile
+        if(myPath == ''):
+            partPath = self.app.config['TEMPLATE_DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/Apps/'+self.app.appName+'/'+self.app.controller+'/'+partFile+'.html'
+            mainPath = self.app.config['TEMPLATE_DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/'+self.mainFile
+        else:
+            partPath = myPath+'/'+self.app.config['TEMPLATE_DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/Apps/'+self.app.appName+'/'+self.app.controller+'/'+partFile+'.html'
+            mainPath = myPath+'/'+self.app.config['TEMPLATE_DIRECTORY'] +'/'+self.app.config['TEMPLATE_DIR']+'/'+self.app.config['TEMPLATE_NAME']+'/'+self.mainFile
         
         if(os.path.isfile(partPath)):
             size = os.path.getsize(partPath)
@@ -41,7 +47,7 @@ class Templating:
             t = airspeed.Template(templateString)
             content = t.merge(locals())
         else:
-            content = 'Taki widko nie istnieje'
+            content = 'Taki widok nie istnieje'
         
         # główny plik szablonu
         if(os.path.isfile(mainPath)):
@@ -53,7 +59,7 @@ class Templating:
            self.viewReady = t.merge(locals())
             
         else:
-            self.viewReady = os.environ["PY_PATH"]
+            self.viewReady = 'Taki szablom nie istnieje '+mainPath
     
     def display(self):
         print self.viewReady

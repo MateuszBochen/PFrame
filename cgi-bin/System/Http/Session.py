@@ -63,10 +63,10 @@ class Session:
     # @param value session value
     # @return self
     def set(self, name, value):        
-        self.session[name] = value
-        self.session.close() 
-        self.session = shelve.open(self.sessionDir + '/sess_' + self.sessionId, writeback=True)
+        self.session[name] = value       
         return self
-     
+        
+    def __del__(self):
+        self.session.close() 
     
         

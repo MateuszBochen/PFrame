@@ -13,7 +13,7 @@ class URL:
     def __init__(self, kernel):        
         self.kernelObj = kernel
         self.currentUrl = self.kernelObj.kernelOS.environ["REQUEST_URI"].replace(self.kernelObj.config['DIRECTORY'], '')        
-        self.currentUrl = self.currentUrl.strip(' \t\n\r/')
+        self.currentUrl = self.currentUrl.strip(' \t\n\r/')       
         self.segments = self.currentUrl.split('/')
         
     

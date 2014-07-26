@@ -14,6 +14,7 @@ class Response:
         print "Content-type: text/html;  charset: UTF-8; \n\n"
         
         
+        
     def redirect(self, url):
         
         print "Location: http://"+os.environ['SERVER_NAME']+url+"\n"
